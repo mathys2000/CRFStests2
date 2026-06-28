@@ -1,0 +1,18 @@
+### Recommended .gitignore for jupytext and git
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+**/.ipynb_checkpoints/
+
+# Ignore outputs and automatically generated execution files
+*.ipynb
+
+# Ignore standard Python cache and IDE files
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+.idea/
+
+### Exclude zipped files
+*.zip
