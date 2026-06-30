@@ -6,7 +6,7 @@
 #       extension: .py
 #       format_name: percent
 #       format_version: '1.3'
-#       jupytext_version: 1.19.3
+#       jupytext_version: 1.19.4
 #   kernelspec:
 #     display_name: polar [conda env:polar]
 #     language: python
@@ -49,17 +49,42 @@ col_list = IQdf.columns.tolist()
 print(col_list)
 
 # %%
-# Get sampling rate
-Ts = IQdf.loc[0, 'sample_period']
+# Select row in dataframe
+ix = 0
+
+# %%
+# Get sampling rate and center frequency
+Ts = IQdf.loc[ix, 'sample_period']
 Fs = int(np.round(1/Ts))   # sampling rate
 print(Fs)
+fc = IQdf.loc[ix, 'center_frequency']
+print(fc)
 
 
 # %%
 # Get I and Q data strings
-yIt_str = IQdf.loc[0, 'i']
-yQt_str = IQdf.loc[0, 'q']
+yIt_str = IQdf.loc[ix, 'i']
+yQt_str = IQdf.loc[ix, 'q']
 print(yIt_str[:60])
 print(yQt_str[:60])
+
+# %%
+# Convert IQ strings to complex-valued numpy array
+yt = np.array(yIt_str[1:-1].split(','), dtype=float) + 1j*np.array(yQt_str[1:-1].split(','), dtype=float)
+print(yt[:10])
+
+# %%
+# Display PSD of selected IQ data
+thr = 0
+NB = 256
+ff, Syf, Syavgf = lte.computePSDw(yt, Fs, thr, NB)
+psdcorr = 0.5   # correction baseband to bandpass power (baseband pwr=2*bandpass pwr)
+Syf = 1000/50*psdcorr*Syf    # change for dBm and bandpass power
+fig, axes = plt.subplots(1, 1, figsize=fsz)
+fig.canvas.toolbar_position = 'top'
+lte.psd4mplot((ff+fc)*1e-6, Syf, axes, ylbl='Pwr [dBm]', xlbl='$f$ [MHz]')
+axes.set_title(f'PSD, {sigName}, ix={ix}')
+plt.tight_layout()
+plt.show()
 
 # %%
