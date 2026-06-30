@@ -1,7 +1,6 @@
 # ---
 # jupyter:
 #   jupytext:
-#     formats: ipynb,py:percent
 #     text_representation:
 #       extension: .py
 #       format_name: percent
@@ -34,8 +33,14 @@ fsz2 = (fsz[0], 1.2*fsz[1]/2.0)
 # %%
 # Read single IQ data record in
 # IQ_080525a_csv_N1/time-data.csv
-sigName = 'IQ_080525a_N1'
-folder_in = 'IQ_080525a_csv_N1'
+#sigName = 'IQ_080525a_N1'
+#folder_in = 'IQ_080525a_csv_N1'
+#fname = 'time-data'
+#-------------------------------------------------
+# Read IQ data records in
+# IQ_080525a_csv_N4/time-data.csv
+sigName = 'IQ_080525a_N4'
+folder_in = 'IQ_080525a_csv_N4'
 fname = 'time-data'
 #-------------------------------------------------
 
